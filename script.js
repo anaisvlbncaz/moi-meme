@@ -1,7 +1,7 @@
 // ### Menu mobile ###
 
 const menuButton = document.getElementById("menuButton");
-const navigation = document.querySelector(".navbar nav");
+const navigation = document.getElementById("navigation");
 
 menuButton.addEventListener("click", () => {
 
@@ -10,11 +10,9 @@ menuButton.addEventListener("click", () => {
 });
 
 
-// ### Fermeture du menu après clic ###
+// ### Fermeture du menu ###
 
-const navigationLinks = document.querySelectorAll(".navbar nav a");
-
-navigationLinks.forEach(link => {
+document.querySelectorAll("#navigation a").forEach(link => {
 
     link.addEventListener("click", () => {
 
@@ -25,13 +23,14 @@ navigationLinks.forEach(link => {
 });
 
 
-// ### Apparition des éléments au scroll ###
+// ### Animations au scroll ###
 
 const animatedElements = document.querySelectorAll(
-    ".timeline-item, .passion-card, .destination, .future-card, .about-main, .personality-card"
+    ".timeline-item, .destination, .future-card, .about-main, .personality-card, .photo-card"
 );
 
 const observer = new IntersectionObserver(
+
     entries => {
 
         entries.forEach(entry => {
@@ -45,9 +44,11 @@ const observer = new IntersectionObserver(
         });
 
     },
+
     {
-        threshold: 0.15
+        threshold: 0.12
     }
+
 );
 
 animatedElements.forEach(element => {
@@ -80,7 +81,7 @@ const quotes = [
 
     {
         text: "« C'est pas parce qu'on a rien à dire qu'il faut fermer sa gueule. »",
-        author: "— Probablement une règle de vie"
+        author: "— Une règle de vie assez personnelle"
     },
 
     {
@@ -92,7 +93,7 @@ const quotes = [
 
 let currentQuote = 0;
 
-const quoteText = document.getElementById("quote");
+const quote = document.getElementById("quote");
 const quoteAuthor = document.getElementById("quoteAuthor");
 const quoteCounter = document.getElementById("quoteCounter");
 
@@ -101,21 +102,24 @@ const previousQuote = document.getElementById("previousQuote");
 
 function updateQuote() {
 
-    quoteText.style.opacity = "0";
+    quote.style.opacity = "0";
 
     setTimeout(() => {
 
-        quoteText.textContent = quotes[currentQuote].text;
-        quoteAuthor.textContent = quotes[currentQuote].author;
+        quote.textContent = quotes[currentQuote].text;
+
+        quoteAuthor.textContent =
+            quotes[currentQuote].author;
 
         quoteCounter.textContent =
-            `${String(currentQuote + 1).padStart(2, "0")} / ${String(quotes.length).padStart(2, "0")}`;
+            `${String(currentQuote + 1).padStart(2,"0")} / ${String(quotes.length).padStart(2,"0")}`;
 
-        quoteText.style.opacity = "1";
+        quote.style.opacity = "1";
 
-    }, 200);
+    },200);
 
 }
+
 
 nextQuote.addEventListener("click", () => {
 
@@ -143,7 +147,7 @@ previousQuote.addEventListener("click", () => {
 });
 
 
-// ### Interaction voiture ###
+// ### Interaction Shelby ###
 
 const carButton = document.getElementById("carButton");
 
@@ -151,46 +155,39 @@ carButton.addEventListener("click", () => {
 
     carButton.textContent = "VROUM";
 
+    carButton.style.transform = "scale(1.15)";
+
     setTimeout(() => {
 
         carButton.textContent = "▶";
 
-    }, 1200);
+        carButton.style.transform = "scale(1)";
+
+    },1000);
 
 });
 
 
-// ### Apparition progressive de la page ###
+// ### Effet photo ###
 
-window.addEventListener("load", () => {
-
-    document.body.classList.add("loaded");
-
-});
-
-
-// ### Effet sur les cartes de passions ###
-
-const passionCards = document.querySelectorAll(".passion-card");
-
-passionCards.forEach(card => {
+document.querySelectorAll(".photo-card").forEach(card => {
 
     card.addEventListener("mouseenter", () => {
 
-        card.style.transform = "translateY(-8px)";
+        card.style.zIndex = "5";
 
     });
 
     card.addEventListener("mouseleave", () => {
 
-        card.style.transform = "translateY(0)";
+        card.style.zIndex = "1";
 
     });
 
 });
 
 
-// ### Message dans la console ###
+// ### Message console ###
 
 console.log(
     "Bienvenue dans l'univers d'Anaïs. ♊"
