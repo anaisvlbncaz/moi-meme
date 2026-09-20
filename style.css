@@ -1411,6 +1411,24 @@ button {
     color: var(--orange);
     animation: twinkle 2s infinite;
 }
+.contact-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 24px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: #242024;
+    background: #fff;
+    border: 3px solid #242024;
+    font-weight: 800;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.contact-button:hover {
+    transform: translateY(-5px) rotate(-2deg);
+    box-shadow: 6px 6px 0 #242024;
+}
 
 footer {
     padding: 30px 7%;
