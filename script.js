@@ -1,20 +1,3 @@
-### LOADER ###
-
-window.addEventListener("load", () => {
-
-    const loader = document.querySelector(".page-loader");
-
-    setTimeout(() => {
-
-        loader.classList.add("hidden");
-
-    }, 700);
-
-});
-
-
-### NAVIGATION MOBILE ###
-
 const menuButton = document.getElementById("menuButton");
 const navigation = document.getElementById("navigation");
 
@@ -23,19 +6,16 @@ if (menuButton && navigation) {
     menuButton.addEventListener("click", () => {
 
         navigation.classList.toggle("open");
-
-        menuButton.classList.toggle("active");
+        document.body.classList.toggle("menu-open");
 
     });
-
 
     navigation.querySelectorAll("a").forEach(link => {
 
         link.addEventListener("click", () => {
 
             navigation.classList.remove("open");
-
-            menuButton.classList.remove("active");
+            document.body.classList.remove("menu-open");
 
         });
 
@@ -44,40 +24,9 @@ if (menuButton && navigation) {
 }
 
 
-### NAVBAR AU SCROLL ###
-
-const navbar = document.querySelector(".navbar");
-
-window.addEventListener("scroll", () => {
-
-    if (window.scrollY > 40) {
-
-        navbar.classList.add("scrolled");
-
-    } else {
-
-        navbar.classList.remove("scrolled");
-
-    }
-
-});
-
-
-### APPARITION DES ÉLÉMENTS ###
-
-const revealElements = document.querySelectorAll(
-    ".about-grid, .personality-board, .value-card, .timeline-card, .skill, .polaroid, .dream-car, .dublin-content, .dublin-photo, .travel-list article, .future-content, .future-card, .quote-inner, .contact-content"
-);
-
-revealElements.forEach(element => {
-
-    element.classList.add("reveal");
-
-});
-
+const revealElements = document.querySelectorAll(".reveal");
 
 const revealObserver = new IntersectionObserver(
-
     entries => {
 
         entries.forEach(entry => {
@@ -93,13 +42,10 @@ const revealObserver = new IntersectionObserver(
         });
 
     },
-
     {
         threshold: 0.12
     }
-
 );
-
 
 revealElements.forEach(element => {
 
@@ -108,55 +54,14 @@ revealElements.forEach(element => {
 });
 
 
-### BARRES DE COMPÉTENCES ###
+const cursorGlow = document.querySelector(".cursor-glow");
 
-const skillsSection = document.querySelector(".skills-wrapper");
-
-if (skillsSection) {
-
-    const skillsObserver = new IntersectionObserver(
-
-        entries => {
-
-            if (entries[0].isIntersecting) {
-
-                document
-                    .querySelectorAll(".skill-bar i")
-                    .forEach(bar => {
-
-                        bar.classList.add("loaded");
-
-                    });
-
-                skillsObserver.disconnect();
-
-            }
-
-        },
-
-        {
-            threshold: 0.3
-        }
-
-    );
-
-    skillsObserver.observe(skillsSection);
-
-}
-
-
-### CURSEUR ###
-
-const cursor = document.querySelector(".cursor-glow");
-
-if (cursor && window.matchMedia("(pointer: fine)").matches) {
+if (cursorGlow && window.innerWidth > 900) {
 
     let mouseX = 0;
     let mouseY = 0;
-
-    let cursorX = 0;
-    let cursorY = 0;
-
+    let glowX = 0;
+    let glowY = 0;
 
     document.addEventListener("mousemove", event => {
 
@@ -165,106 +70,112 @@ if (cursor && window.matchMedia("(pointer: fine)").matches) {
 
     });
 
+    function animateGlow() {
 
-    function animateCursor() {
+        glowX += (mouseX - glowX) * 0.12;
+        glowY += (mouseY - glowY) * 0.12;
 
-        cursorX += (mouseX - cursorX) * 0.15;
-        cursorY += (mouseY - cursorY) * 0.15;
+        cursorGlow.style.left = `${glowX}px`;
+        cursorGlow.style.top = `${glowY}px`;
 
-        cursor.style.left = `${cursorX}px`;
-        cursor.style.top = `${cursorY}px`;
-
-        requestAnimationFrame(animateCursor);
+        requestAnimationFrame(animateGlow);
 
     }
 
-    animateCursor();
+    animateGlow();
+
+}
 
 
-    document.querySelectorAll("a, button, .polaroid, .value-card").forEach(element => {
+const hero = document.querySelector(".hero");
+const heroPhoto = document.querySelector(".hero-instax");
 
-        element.addEventListener("mouseenter", () => {
+if (hero && heroPhoto && window.innerWidth > 900) {
 
-            cursor.style.width = "38px";
-            cursor.style.height = "38px";
-            cursor.style.background = "#f3a9bd";
+    hero.addEventListener("mousemove", event => {
 
-        });
+        const rect = hero.getBoundingClientRect();
 
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
 
-        element.addEventListener("mouseleave", () => {
+        heroPhoto.style.transform =
+            `rotate(${7 + x * 7}deg) translate(${x * 15}px, ${y * 15}px)`;
 
-            cursor.style.width = "22px";
-            cursor.style.height = "22px";
-            cursor.style.background = "#f3a9bd";
+    });
 
-        });
+    hero.addEventListener("mouseleave", () => {
+
+        heroPhoto.style.transform = "rotate(7deg)";
 
     });
 
 }
 
 
-### CITATIONS ###
-
 const quotes = [
-
     {
         text: "« Un problème sans solution est un problème mal posé. »",
         author: "— Une façon de voir les choses"
     },
-
     {
         text: "« Il faut toujours viser la lune, car même en cas d'échec, on atterrit dans les étoiles. »",
         author: "— Oscar Wilde"
     },
-
     {
-        text: "« La vie est courte, alors autant faire quelque chose qui nous plaît. »",
-        author: "— Une règle personnelle"
+        text: "« La vie est trop courte pour ne pas en profiter. »",
+        author: "— Et ça, je compte bien l'appliquer."
     }
-
 ];
-
 
 let currentQuote = 0;
 
 const quoteElement = document.getElementById("quote");
-const authorElement = document.getElementById("quoteAuthor");
-const counterElement = document.getElementById("quoteCounter");
+const quoteAuthor = document.getElementById("quoteAuthor");
+const quoteCounter = document.getElementById("quoteCounter");
 
 const previousQuote = document.getElementById("previousQuote");
 const nextQuote = document.getElementById("nextQuote");
 
-
 function displayQuote(index) {
 
-    if (!quoteElement || !authorElement || !counterElement) {
+    if (!quoteElement || !quoteAuthor || !quoteCounter) {
         return;
     }
 
-
     quoteElement.style.opacity = "0";
-    quoteElement.style.transform = "translateY(10px)";
-
+    quoteAuthor.style.opacity = "0";
 
     setTimeout(() => {
 
         quoteElement.textContent = quotes[index].text;
+        quoteAuthor.textContent = quotes[index].author;
 
-        authorElement.textContent = quotes[index].author;
-
-        counterElement.textContent =
+        quoteCounter.textContent =
             `${String(index + 1).padStart(2, "0")} / ${String(quotes.length).padStart(2, "0")}`;
 
-
         quoteElement.style.opacity = "1";
-        quoteElement.style.transform = "translateY(0)";
+        quoteAuthor.style.opacity = "1";
 
-    }, 200);
+    }, 180);
 
 }
 
+if (nextQuote) {
+
+    nextQuote.addEventListener("click", () => {
+
+        currentQuote++;
+
+        if (currentQuote >= quotes.length) {
+            currentQuote = 0;
+        }
+
+        displayQuote(currentQuote);
+
+    });
+
+}
 
 if (previousQuote) {
 
@@ -283,134 +194,85 @@ if (previousQuote) {
 }
 
 
-if (nextQuote) {
-
-    nextQuote.addEventListener("click", () => {
-
-        currentQuote++;
-
-        if (currentQuote >= quotes.length) {
-            currentQuote = 0;
-        }
-
-        displayQuote(currentQuote);
-
-    });
-
-}
-
-
-### AUTOPLAY DES CITATIONS ###
-
-setInterval(() => {
-
-    currentQuote++;
-
-    if (currentQuote >= quotes.length) {
-        currentQuote = 0;
-    }
-
-    displayQuote(currentQuote);
-
-}, 7000);
-
-
-### DREAM CAR ###
-
 const carButton = document.getElementById("carButton");
 
 if (carButton) {
 
+    let carClicked = false;
+
     carButton.addEventListener("click", () => {
 
-        carButton.textContent = "🏎️";
+        carClicked = !carClicked;
 
-        carButton.style.transform = "rotate(360deg) scale(1.15)";
+        if (carClicked) {
 
+            carButton.textContent = "VROOOOOUM 💨";
 
-        setTimeout(() => {
+            carButton.style.background = "#b9efd9";
 
-            carButton.textContent = "🏁";
-            carButton.style.transform = "";
+        } else {
 
-        }, 700);
+            carButton.textContent = "VROUM →";
+
+            carButton.style.background = "";
+
+        }
 
     });
 
 }
 
 
-### PARALLAX LÉGER ###
+const photoCards = document.querySelectorAll(".retro-photo");
 
-const heroSun = document.querySelector(".hero-sun");
+photoCards.forEach(card => {
 
-window.addEventListener("scroll", () => {
+    card.addEventListener("click", () => {
 
-    if (!heroSun) {
-        return;
-    }
+        card.classList.toggle("photo-selected");
 
-    const scroll = window.scrollY;
-
-    if (scroll < window.innerHeight) {
-
-        heroSun.style.transform =
-            `translateY(${scroll * 0.12}px)`;
-
-    }
+    });
 
 });
 
 
-### NAVIGATION ACTIVE ###
+const navLinks = document.querySelectorAll(".navbar nav a");
 
 const sections = document.querySelectorAll(
-    "section[id]"
+    "main section[id]"
 );
-
-const navLinks = document.querySelectorAll(
-    ".navbar nav a"
-);
-
 
 const sectionObserver = new IntersectionObserver(
-
     entries => {
 
         entries.forEach(entry => {
 
-            if (entry.isIntersecting) {
+            if (!entry.isIntersecting) {
+                return;
+            }
 
-                navLinks.forEach(link => {
+            navLinks.forEach(link => {
 
-                    link.classList.remove("active");
+                link.classList.remove("active");
 
-                });
+                if (
+                    link.getAttribute("href") ===
+                    `#${entry.target.id}`
+                ) {
 
-
-                const activeLink = document.querySelector(
-                    `.navbar nav a[href="#${entry.target.id}"]`
-                );
-
-
-                if (activeLink) {
-
-                    activeLink.classList.add("active");
+                    link.classList.add("active");
 
                 }
 
-            }
+            });
 
         });
 
     },
-
     {
-        threshold: 0.45
+        threshold: 0.35
     }
-
 );
-
 
 sections.forEach(section => {
 
@@ -419,41 +281,56 @@ sections.forEach(section => {
 });
 
 
-### PETITE INTERACTION POLAROIDS ###
+window.addEventListener("scroll", () => {
 
-document.querySelectorAll(".polaroid").forEach(polaroid => {
+    const scrollPosition = window.scrollY;
 
-    polaroid.addEventListener("mousemove", event => {
+    const heroSun = document.querySelector(".hero-sun");
 
-        const rect = polaroid.getBoundingClientRect();
+    if (heroSun && scrollPosition < window.innerHeight) {
 
-        const x =
-            (event.clientX - rect.left) / rect.width - 0.5;
+        heroSun.style.transform =
+            `translateY(${scrollPosition * 0.08}px)`;
 
-        const y =
-            (event.clientY - rect.top) / rect.height - 0.5;
-
-
-        polaroid.style.transform =
-            `perspective(700px)
-             rotateX(${y * -5}deg)
-             rotateY(${x * 5}deg)
-             scale(1.03)`;
-
-    });
-
-
-    polaroid.addEventListener("mouseleave", () => {
-
-        polaroid.style.transform = "";
-
-    });
+    }
 
 });
 
 
-### FIN ###
+const skillBars = document.querySelectorAll(".skill-bar span");
 
-console.log(
-    "Bienvenue dans l'univers d'Anaïs ♡"
+const skillObserver = new IntersectionObserver(
+    entries => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                entry.target.style.animationPlayState = "running";
+
+                skillObserver.unobserve(entry.target);
+
+            }
+
+        });
+
+    },
+    {
+        threshold: 0.4
+    }
 );
+
+skillBars.forEach(bar => {
+
+    bar.style.animationPlayState = "paused";
+
+    skillObserver.observe(bar);
+
+});
+
+
+window.addEventListener("load", () => {
+
+    document.body.classList.add("loaded");
+
+});
