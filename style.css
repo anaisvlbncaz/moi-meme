@@ -1,0 +1,1471 @@
+/* ### Variables ### */
+
+:root {
+    --black: #080808;
+    --dark: #101010;
+    --dark-light: #181818;
+    --white: #f4f1eb;
+    --grey: #999;
+    --grey-dark: #555;
+    --accent: #c9a36a;
+    --accent-light: #e5c997;
+
+    --font-main: "DM Sans", sans-serif;
+    --font-title: "Playfair Display", serif;
+}
+
+
+/* ### Reset ### */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-main);
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+}
+
+
+/* ### Barre de navigation ### */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 5vw;
+
+    z-index: 1000;
+
+    background: rgba(8, 8, 8, 0.75);
+    backdrop-filter: blur(15px);
+
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.logo {
+    font-family: var(--font-title);
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.logo span,
+.footer-logo span {
+    color: var(--accent);
+}
+
+.navbar nav {
+    display: flex;
+    gap: 35px;
+}
+
+.navbar nav a {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #aaa;
+
+    transition: 0.3s ease;
+}
+
+.navbar nav a:hover {
+    color: var(--white);
+}
+
+.menu-button {
+    display: none;
+
+    background: none;
+    border: none;
+
+    width: 30px;
+    cursor: pointer;
+}
+
+.menu-button span {
+    display: block;
+    height: 2px;
+    margin: 5px 0;
+
+    background: white;
+}
+
+
+/* ### Hero ### */
+
+.hero {
+    position: relative;
+
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+
+    padding: 120px 10vw;
+
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 70% 40%,
+            rgba(201,163,106,0.12),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 20% 80%,
+            rgba(255,255,255,0.05),
+            transparent 30%
+        );
+
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+
+    max-width: 1000px;
+}
+
+.eyebrow {
+    color: var(--accent);
+
+    font-size: 11px;
+    letter-spacing: 4px;
+    font-weight: 600;
+}
+
+.hero h1 {
+    margin-top: 25px;
+
+    font-family: var(--font-title);
+
+    font-size: clamp(70px, 11vw, 170px);
+    line-height: 0.85;
+
+    font-weight: 500;
+}
+
+.hero h1 span {
+    display: block;
+
+    color: transparent;
+
+    -webkit-text-stroke: 1px rgba(244,241,235,0.6);
+}
+
+.hero-subtitle {
+    margin-top: 45px;
+
+    font-size: 20px;
+    line-height: 1.7;
+
+    color: #c5c5c5;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+
+    margin-top: 45px;
+}
+
+.button {
+    padding: 15px 25px;
+
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    transition: 0.3s ease;
+}
+
+.button-primary {
+    background: var(--white);
+    color: var(--black);
+}
+
+.button-primary:hover {
+    background: var(--accent);
+}
+
+.button-secondary {
+    border: 1px solid rgba(255,255,255,0.25);
+}
+
+.button-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.scroll-indicator {
+    position: absolute;
+
+    bottom: 40px;
+    left: 10vw;
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    color: #666;
+
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+
+.scroll-indicator div {
+    width: 70px;
+    height: 1px;
+
+    background: #444;
+}
+
+
+/* ### Sections ### */
+
+.section {
+    position: relative;
+
+    padding: 150px 10vw;
+}
+
+.section-number {
+    position: absolute;
+
+    top: 150px;
+    right: 8vw;
+
+    color: #292929;
+
+    font-size: 100px;
+    font-family: var(--font-title);
+}
+
+.section-header {
+    position: relative;
+    max-width: 850px;
+}
+
+.section-header h2 {
+    margin-top: 25px;
+
+    font-family: var(--font-title);
+
+    font-size: clamp(45px, 6vw, 90px);
+    font-weight: 500;
+    line-height: 1;
+}
+
+.section-header h2 em {
+    color: var(--accent);
+    font-style: normal;
+}
+
+.section-intro {
+    margin-top: 30px;
+
+    max-width: 600px;
+
+    color: #999;
+
+    line-height: 1.8;
+}
+
+
+/* ### About ### */
+
+.about {
+    background: var(--dark);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+
+    gap: 100px;
+
+    margin-top: 100px;
+}
+
+.about-main {
+    max-width: 700px;
+}
+
+.about-main p {
+    margin-bottom: 25px;
+
+    color: #aaa;
+
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.about-main .big-text {
+    color: var(--white);
+
+    font-family: var(--font-title);
+
+    font-size: 35px;
+    line-height: 1.4;
+}
+
+.about-main strong {
+    color: var(--accent);
+}
+
+.personality-card {
+    padding: 30px;
+
+    background: #111;
+
+    border: 1px solid #292929;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+
+    padding-bottom: 20px;
+
+    color: #555;
+
+    font-size: 10px;
+    letter-spacing: 2px;
+
+    border-bottom: 1px solid #292929;
+}
+
+.personality-list > div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    padding: 20px 0;
+
+    border-bottom: 1px solid #222;
+}
+
+.personality-list span {
+    color: var(--accent);
+    font-size: 10px;
+}
+
+.personality-list strong {
+    font-size: 14px;
+}
+
+.quote-box {
+    margin-top: 100px;
+
+    padding: 60px;
+
+    text-align: center;
+
+    border-top: 1px solid #292929;
+    border-bottom: 1px solid #292929;
+}
+
+.quote-mark {
+    display: block;
+
+    color: var(--accent);
+
+    font-family: var(--font-title);
+    font-size: 80px;
+    line-height: 0.5;
+}
+
+.quote-box p {
+    max-width: 800px;
+
+    margin: 30px auto 15px;
+
+    font-family: var(--font-title);
+
+    font-size: clamp(25px, 4vw, 45px);
+}
+
+.quote-box small {
+    color: #666;
+}
+
+
+/* ### Values ### */
+
+.values-section {
+    padding: 100px 10vw;
+
+    background: #0b0b0b;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 50px;
+}
+
+.value {
+    padding: 20px 0;
+
+    border-top: 1px solid #333;
+}
+
+.value span {
+    color: var(--accent);
+
+    font-size: 10px;
+}
+
+.value h3 {
+    margin-top: 25px;
+
+    font-family: var(--font-title);
+
+    font-size: 30px;
+}
+
+.value p {
+    margin-top: 10px;
+
+    color: #777;
+}
+
+
+/* ### Timeline ### */
+
+.timeline {
+    margin-top: 100px;
+
+    border-left: 1px solid #333;
+}
+
+.timeline-item {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: 160px 1fr;
+
+    padding: 0 0 70px 50px;
+}
+
+.timeline-item::before {
+    content: "";
+
+    position: absolute;
+
+    left: -5px;
+    top: 5px;
+
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: #333;
+}
+
+.timeline-item.active::before {
+    background: var(--accent);
+
+    box-shadow: 0 0 20px rgba(201,163,106,0.5);
+}
+
+.timeline-date {
+    color: var(--accent);
+
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+.timeline-tag {
+    color: #666;
+
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+
+.timeline-content h3 {
+    margin: 12px 0;
+
+    font-family: var(--font-title);
+
+    font-size: 32px;
+}
+
+.timeline-content p {
+    color: #777;
+
+    line-height: 1.7;
+}
+
+
+/* ### Skills ### */
+
+.skills {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 35px;
+
+    margin-top: 80px;
+
+    max-width: 800px;
+}
+
+.skill > span {
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 12px;
+}
+
+.skill-bar {
+    width: 100%;
+    height: 2px;
+
+    background: #292929;
+}
+
+.skill-bar div {
+    height: 100%;
+
+    background: var(--accent);
+}
+
+
+/* ### Passions ### */
+
+.passions-section {
+    background: #0d0d0d;
+}
+
+.passions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 2px;
+
+    margin-top: 90px;
+}
+
+.passion-card {
+    position: relative;
+
+    min-height: 370px;
+
+    padding: 45px;
+
+    background: #141414;
+
+    overflow: hidden;
+
+    transition: 0.5s ease;
+}
+
+.passion-card:hover {
+    background: #1b1b1b;
+    transform: translateY(-5px);
+}
+
+.passion-number {
+    position: absolute;
+
+    top: 30px;
+    right: 30px;
+
+    color: #333;
+
+    font-size: 12px;
+}
+
+.passion-icon {
+    margin-top: 30px;
+
+    color: var(--accent);
+
+    font-size: 45px;
+}
+
+.passion-card h3 {
+    margin-top: 35px;
+
+    font-family: var(--font-title);
+
+    font-size: 45px;
+}
+
+.passion-card p {
+    max-width: 450px;
+
+    margin-top: 20px;
+
+    color: #888;
+
+    line-height: 1.7;
+}
+
+.passion-detail {
+    position: absolute;
+
+    bottom: 35px;
+    left: 45px;
+
+    display: flex;
+    gap: 15px;
+}
+
+.passion-detail span {
+    padding: 7px 10px;
+
+    border: 1px solid #333;
+
+    color: #666;
+
+    font-size: 8px;
+    letter-spacing: 2px;
+}
+
+.vroum {
+    display: block;
+
+    margin-top: 30px;
+
+    color: var(--accent);
+
+    letter-spacing: 4px;
+}
+
+
+/* ### Dream car ### */
+
+.dream-car {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 2px;
+    padding: 50px;
+
+    background: #171717;
+}
+
+.dream-car > div:first-child span {
+    color: var(--accent);
+
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+
+.dream-car h3 {
+    margin-top: 10px;
+
+    font-family: var(--font-title);
+
+    font-size: 45px;
+}
+
+.dream-car h3 em {
+    color: var(--accent);
+    font-style: normal;
+}
+
+.car-button {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #444;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.car-button:hover {
+    background: var(--accent);
+    color: var(--black);
+}
+
+
+/* ### Concert ### */
+
+.concert-section {
+    position: relative;
+
+    min-height: 75vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(201,163,106,0.15),
+            transparent 45%
+        ),
+        #050505;
+}
+
+.concert-content {
+    position: relative;
+    z-index: 2;
+}
+
+.concert-content h2 {
+    margin-top: 20px;
+
+    font-family: var(--font-title);
+
+    font-size: clamp(60px, 10vw, 140px);
+}
+
+.concert-content p {
+    margin-top: 10px;
+
+    color: #aaa;
+
+    font-size: 18px;
+}
+
+.concert-line {
+    width: 100px;
+    height: 1px;
+
+    margin: 30px auto;
+
+    background: var(--accent);
+}
+
+.concert-content > span:last-child {
+    color: #555;
+
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+
+
+/* ### Travel ### */
+
+.travel-map {
+    position: relative;
+
+    min-height: 550px;
+
+    margin-top: 80px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #191919,
+            #0e0e0e 60%
+        );
+
+    border: 1px solid #222;
+
+    overflow: hidden;
+}
+
+.map-line {
+    position: absolute;
+
+    top: 45%;
+    left: 10%;
+
+    width: 80%;
+
+    border-top: 1px dashed #444;
+
+    transform: rotate(-8deg);
+}
+
+.destination {
+    position: absolute;
+}
+
+.destination-ireland {
+    top: 30%;
+    left: 28%;
+}
+
+.destination-edinburgh {
+    top: 18%;
+    left: 54%;
+}
+
+.destination-stockholm {
+    top: 48%;
+    right: 15%;
+}
+
+.pin {
+    width: 14px;
+    height: 14px;
+
+    border-radius: 50%;
+
+    background: var(--accent);
+
+    box-shadow: 0 0 0 8px rgba(201,163,106,0.1);
+}
+
+.destination-info {
+    margin-top: 20px;
+}
+
+.destination-info span {
+    color: var(--accent);
+
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.destination-info h3 {
+    margin-top: 7px;
+
+    font-family: var(--font-title);
+
+    font-size: 30px;
+}
+
+.destination-info p {
+    max-width: 200px;
+
+    margin-top: 5px;
+
+    color: #666;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.world-dream {
+    margin-top: 40px;
+
+    padding: 50px;
+
+    border: 1px solid #292929;
+
+    text-align: center;
+}
+
+.world-dream > span {
+    color: var(--accent);
+
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+
+.world-dream h3 {
+    margin-top: 15px;
+
+    font-family: var(--font-title);
+
+    font-size: 45px;
+}
+
+.world-dream p {
+    margin-top: 15px;
+
+    color: #777;
+}
+
+
+/* ### Future ### */
+
+.future-section {
+    background: var(--dark);
+}
+
+.future-content {
+    max-width: 1000px;
+}
+
+.future-content h2 {
+    margin-top: 25px;
+
+    font-family: var(--font-title);
+
+    font-size: clamp(55px, 8vw, 110px);
+    font-weight: 500;
+    line-height: 1;
+}
+
+.future-content h2 em {
+    display: block;
+
+    color: var(--accent);
+    font-style: normal;
+}
+
+.future-text {
+    max-width: 650px;
+
+    margin-top: 35px;
+
+    color: #999;
+
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.future-card {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+
+    margin-top: 80px;
+    padding: 50px;
+
+    background: #151515;
+
+    border: 1px solid #292929;
+}
+
+.future-card-number {
+    color: #333;
+
+    font-family: var(--font-title);
+
+    font-size: 50px;
+}
+
+.future-card span {
+    color: var(--accent);
+
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+
+.future-card h3 {
+    margin-top: 10px;
+
+    font-family: var(--font-title);
+
+    font-size: 35px;
+}
+
+
+/* ### Astrologie ### */
+
+.astro-section {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+
+    padding: 120px 15vw;
+
+    background:
+        radial-gradient(
+            circle at 30% 50%,
+            rgba(201,163,106,0.08),
+            transparent 30%
+        );
+}
+
+.astro-symbol {
+    font-size: 180px;
+
+    color: var(--accent);
+
+    font-family: var(--font-title);
+}
+
+.astro-content {
+    max-width: 650px;
+}
+
+.astro-content h2 {
+    margin-top: 20px;
+
+    font-family: var(--font-title);
+
+    font-size: 80px;
+}
+
+.astro-content p {
+    margin-top: 20px;
+
+    color: #999;
+
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.astro-tags {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: 30px;
+}
+
+.astro-tags span {
+    padding: 8px 12px;
+
+    border: 1px solid #333;
+
+    color: #777;
+
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.astro-content small {
+    display: block;
+
+    margin-top: 25px;
+
+    color: #444;
+}
+
+
+/* ### Citations ### */
+
+.quotes-section {
+    padding: 150px 10vw;
+
+    background: #f4f1eb;
+
+    color: #0b0b0b;
+}
+
+.quotes-container {
+    max-width: 1000px;
+
+    margin: auto;
+}
+
+.quotes-section .eyebrow {
+    color: #8c6d3e;
+}
+
+.quote-slider {
+    min-height: 180px;
+
+    margin-top: 50px;
+}
+
+.quote-slider p {
+    font-family: var(--font-title);
+
+    font-size: clamp(35px, 5vw, 65px);
+
+    line-height: 1.1;
+}
+
+.quote-slider span {
+    display: block;
+
+    margin-top: 30px;
+
+    color: #777;
+
+    font-size: 12px;
+}
+
+.quote-controls {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+    margin-top: 30px;
+}
+
+.quote-controls button {
+    width: 45px;
+    height: 45px;
+
+    border: 1px solid #bbb;
+
+    background: none;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.quote-controls button:hover {
+    background: #0b0b0b;
+    color: white;
+}
+
+#quoteCounter {
+    color: #777;
+
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+
+/* ### Contact ### */
+
+.contact-section {
+    min-height: 75vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 100px 10vw;
+
+    text-align: center;
+}
+
+.contact-content h2 {
+    margin-top: 25px;
+
+    font-family: var(--font-title);
+
+    font-size: clamp(60px, 10vw, 130px);
+
+    font-weight: 500;
+    line-height: 0.9;
+}
+
+.contact-content h2 em {
+    display: block;
+
+    color: var(--accent);
+
+    font-style: normal;
+}
+
+.contact-content p {
+    margin: 35px auto;
+
+    color: #777;
+}
+
+.contact-button {
+    display: inline-block;
+
+    padding: 18px 30px;
+
+    border: 1px solid #444;
+
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+
+    transition: 0.3s;
+}
+
+.contact-button:hover {
+    background: var(--white);
+    color: var(--black);
+}
+
+
+/* ### Footer ### */
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 40px 5vw;
+
+    border-top: 1px solid #222;
+
+    color: #555;
+
+    font-size: 11px;
+}
+
+.footer-logo {
+    font-family: var(--font-title);
+
+    font-size: 30px;
+
+    color: var(--white);
+}
+
+
+/* ### Curseur ### */
+
+.cursor-glow {
+    position: fixed;
+
+    width: 250px;
+    height: 250px;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    background: radial-gradient(
+        circle,
+        rgba(201,163,106,0.06),
+        transparent 70%
+    );
+
+    transform: translate(-50%, -50%);
+
+    z-index: 0;
+}
+
+
+/* ### Animations ### */
+
+.timeline-item,
+.passion-card,
+.destination,
+.future-card,
+.about-main,
+.personality-card {
+    opacity: 0;
+    transform: translateY(30px);
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+
+/* ### Responsive ### */
+
+@media (max-width: 900px) {
+
+    .navbar nav {
+        position: absolute;
+
+        top: 80px;
+        left: 0;
+
+        width: 100%;
+
+        display: none;
+        flex-direction: column;
+
+        padding: 30px;
+
+        background: #0b0b0b;
+    }
+
+    .navbar nav.active {
+        display: flex;
+    }
+
+    .menu-button {
+        display: block;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+
+        gap: 50px;
+    }
+
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .passions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .skills {
+        grid-template-columns: 1fr;
+    }
+
+    .astro-section {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 30px;
+
+        padding: 100px 10vw;
+    }
+
+    .astro-symbol {
+        font-size: 100px;
+    }
+
+    .travel-map {
+        min-height: 650px;
+    }
+
+    .destination-ireland {
+        top: 20%;
+        left: 15%;
+    }
+
+    .destination-edinburgh {
+        top: 42%;
+        left: 45%;
+    }
+
+    .destination-stockholm {
+        top: 65%;
+        right: 10%;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .navbar {
+        height: 70px;
+    }
+
+    .hero {
+        padding: 110px 7vw 80px;
+    }
+
+    .hero h1 {
+        font-size: 65px;
+    }
+
+    .hero-subtitle {
+        font-size: 17px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .section {
+        padding: 100px 7vw;
+    }
+
+    .section-number {
+        display: none;
+    }
+
+    .section-header h2 {
+        font-size: 48px;
+    }
+
+    .about-main .big-text {
+        font-size: 28px;
+    }
+
+    .quote-box {
+        padding: 40px 20px;
+    }
+
+    .timeline-item {
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+
+        padding-left: 30px;
+    }
+
+    .timeline-content h3 {
+        font-size: 26px;
+    }
+
+    .passion-card {
+        min-height: 330px;
+
+        padding: 30px;
+    }
+
+    .passion-card h3 {
+        font-size: 38px;
+    }
+
+    .dream-car {
+        padding: 30px;
+
+        gap: 20px;
+    }
+
+    .dream-car h3 {
+        font-size: 30px;
+    }
+
+    .travel-map {
+        min-height: 600px;
+    }
+
+    .destination-info h3 {
+        font-size: 25px;
+    }
+
+    .world-dream {
+        padding: 35px 20px;
+    }
+
+    .world-dream h3 {
+        font-size: 35px;
+    }
+
+    .future-card {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        padding: 30px;
+    }
+
+    .future-card h3 {
+        font-size: 28px;
+    }
+
+    .astro-content h2 {
+        font-size: 60px;
+    }
+
+    .quotes-section {
+        padding: 100px 7vw;
+    }
+
+    footer {
+        flex-direction: column;
+
+        gap: 15px;
+
+        text-align: center;
+    }
+
+}
