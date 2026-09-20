@@ -1,35 +1,82 @@
-// ### Menu mobile ###
+### LOADER ###
+
+window.addEventListener("load", () => {
+
+    const loader = document.querySelector(".page-loader");
+
+    setTimeout(() => {
+
+        loader.classList.add("hidden");
+
+    }, 700);
+
+});
+
+
+### NAVIGATION MOBILE ###
 
 const menuButton = document.getElementById("menuButton");
 const navigation = document.getElementById("navigation");
 
-menuButton.addEventListener("click", () => {
+if (menuButton && navigation) {
 
-    navigation.classList.toggle("active");
+    menuButton.addEventListener("click", () => {
 
-});
+        navigation.classList.toggle("open");
 
-
-// ### Fermeture du menu ###
-
-document.querySelectorAll("#navigation a").forEach(link => {
-
-    link.addEventListener("click", () => {
-
-        navigation.classList.remove("active");
+        menuButton.classList.toggle("active");
 
     });
 
+
+    navigation.querySelectorAll("a").forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            navigation.classList.remove("open");
+
+            menuButton.classList.remove("active");
+
+        });
+
+    });
+
+}
+
+
+### NAVBAR AU SCROLL ###
+
+const navbar = document.querySelector(".navbar");
+
+window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 40) {
+
+        navbar.classList.add("scrolled");
+
+    } else {
+
+        navbar.classList.remove("scrolled");
+
+    }
+
 });
 
 
-// ### Animations au scroll ###
+### APPARITION DES ÉLÉMENTS ###
 
-const animatedElements = document.querySelectorAll(
-    ".timeline-item, .destination, .future-card, .about-main, .personality-card, .photo-card"
+const revealElements = document.querySelectorAll(
+    ".about-grid, .personality-board, .value-card, .timeline-card, .skill, .polaroid, .dream-car, .dublin-content, .dublin-photo, .travel-list article, .future-content, .future-card, .quote-inner, .contact-content"
 );
 
-const observer = new IntersectionObserver(
+revealElements.forEach(element => {
+
+    element.classList.add("reveal");
+
+});
+
+
+const revealObserver = new IntersectionObserver(
 
     entries => {
 
@@ -38,6 +85,8 @@ const observer = new IntersectionObserver(
             if (entry.isIntersecting) {
 
                 entry.target.classList.add("visible");
+
+                revealObserver.unobserve(entry.target);
 
             }
 
@@ -51,26 +100,112 @@ const observer = new IntersectionObserver(
 
 );
 
-animatedElements.forEach(element => {
 
-    observer.observe(element);
+revealElements.forEach(element => {
 
-});
-
-
-// ### Curseur lumineux ###
-
-const cursorGlow = document.querySelector(".cursor-glow");
-
-document.addEventListener("mousemove", event => {
-
-    cursorGlow.style.left = `${event.clientX}px`;
-    cursorGlow.style.top = `${event.clientY}px`;
+    revealObserver.observe(element);
 
 });
 
 
-// ### Citations ###
+### BARRES DE COMPÉTENCES ###
+
+const skillsSection = document.querySelector(".skills-wrapper");
+
+if (skillsSection) {
+
+    const skillsObserver = new IntersectionObserver(
+
+        entries => {
+
+            if (entries[0].isIntersecting) {
+
+                document
+                    .querySelectorAll(".skill-bar i")
+                    .forEach(bar => {
+
+                        bar.classList.add("loaded");
+
+                    });
+
+                skillsObserver.disconnect();
+
+            }
+
+        },
+
+        {
+            threshold: 0.3
+        }
+
+    );
+
+    skillsObserver.observe(skillsSection);
+
+}
+
+
+### CURSEUR ###
+
+const cursor = document.querySelector(".cursor-glow");
+
+if (cursor && window.matchMedia("(pointer: fine)").matches) {
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    let cursorX = 0;
+    let cursorY = 0;
+
+
+    document.addEventListener("mousemove", event => {
+
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+
+    });
+
+
+    function animateCursor() {
+
+        cursorX += (mouseX - cursorX) * 0.15;
+        cursorY += (mouseY - cursorY) * 0.15;
+
+        cursor.style.left = `${cursorX}px`;
+        cursor.style.top = `${cursorY}px`;
+
+        requestAnimationFrame(animateCursor);
+
+    }
+
+    animateCursor();
+
+
+    document.querySelectorAll("a, button, .polaroid, .value-card").forEach(element => {
+
+        element.addEventListener("mouseenter", () => {
+
+            cursor.style.width = "38px";
+            cursor.style.height = "38px";
+            cursor.style.background = "#f3a9bd";
+
+        });
+
+
+        element.addEventListener("mouseleave", () => {
+
+            cursor.style.width = "22px";
+            cursor.style.height = "22px";
+            cursor.style.background = "#f3a9bd";
+
+        });
+
+    });
+
+}
+
+
+### CITATIONS ###
 
 const quotes = [
 
@@ -80,48 +215,94 @@ const quotes = [
     },
 
     {
-        text: "« C'est pas parce qu'on a rien à dire qu'il faut fermer sa gueule. »",
-        author: "— Une règle de vie assez personnelle"
+        text: "« Il faut toujours viser la lune, car même en cas d'échec, on atterrit dans les étoiles. »",
+        author: "— Oscar Wilde"
     },
 
     {
-        text: "« Il faut toujours avoir quelque chose à dire. »",
-        author: "— Anaïs, probablement"
+        text: "« La vie est courte, alors autant faire quelque chose qui nous plaît. »",
+        author: "— Une règle personnelle"
     }
 
 ];
 
+
 let currentQuote = 0;
 
-const quote = document.getElementById("quote");
-const quoteAuthor = document.getElementById("quoteAuthor");
-const quoteCounter = document.getElementById("quoteCounter");
+const quoteElement = document.getElementById("quote");
+const authorElement = document.getElementById("quoteAuthor");
+const counterElement = document.getElementById("quoteCounter");
 
-const nextQuote = document.getElementById("nextQuote");
 const previousQuote = document.getElementById("previousQuote");
+const nextQuote = document.getElementById("nextQuote");
 
-function updateQuote() {
 
-    quote.style.opacity = "0";
+function displayQuote(index) {
+
+    if (!quoteElement || !authorElement || !counterElement) {
+        return;
+    }
+
+
+    quoteElement.style.opacity = "0";
+    quoteElement.style.transform = "translateY(10px)";
+
 
     setTimeout(() => {
 
-        quote.textContent = quotes[currentQuote].text;
+        quoteElement.textContent = quotes[index].text;
 
-        quoteAuthor.textContent =
-            quotes[currentQuote].author;
+        authorElement.textContent = quotes[index].author;
 
-        quoteCounter.textContent =
-            `${String(currentQuote + 1).padStart(2,"0")} / ${String(quotes.length).padStart(2,"0")}`;
+        counterElement.textContent =
+            `${String(index + 1).padStart(2, "0")} / ${String(quotes.length).padStart(2, "0")}`;
 
-        quote.style.opacity = "1";
 
-    },200);
+        quoteElement.style.opacity = "1";
+        quoteElement.style.transform = "translateY(0)";
+
+    }, 200);
 
 }
 
 
-nextQuote.addEventListener("click", () => {
+if (previousQuote) {
+
+    previousQuote.addEventListener("click", () => {
+
+        currentQuote--;
+
+        if (currentQuote < 0) {
+            currentQuote = quotes.length - 1;
+        }
+
+        displayQuote(currentQuote);
+
+    });
+
+}
+
+
+if (nextQuote) {
+
+    nextQuote.addEventListener("click", () => {
+
+        currentQuote++;
+
+        if (currentQuote >= quotes.length) {
+            currentQuote = 0;
+        }
+
+        displayQuote(currentQuote);
+
+    });
+
+}
+
+
+### AUTOPLAY DES CITATIONS ###
+
+setInterval(() => {
 
     currentQuote++;
 
@@ -129,66 +310,150 @@ nextQuote.addEventListener("click", () => {
         currentQuote = 0;
     }
 
-    updateQuote();
+    displayQuote(currentQuote);
 
-});
-
-
-previousQuote.addEventListener("click", () => {
-
-    currentQuote--;
-
-    if (currentQuote < 0) {
-        currentQuote = quotes.length - 1;
-    }
-
-    updateQuote();
-
-});
+}, 7000);
 
 
-// ### Interaction Shelby ###
+### DREAM CAR ###
 
 const carButton = document.getElementById("carButton");
 
-carButton.addEventListener("click", () => {
+if (carButton) {
 
-    carButton.textContent = "VROUM";
+    carButton.addEventListener("click", () => {
 
-    carButton.style.transform = "scale(1.15)";
+        carButton.textContent = "🏎️";
 
-    setTimeout(() => {
+        carButton.style.transform = "rotate(360deg) scale(1.15)";
 
-        carButton.textContent = "▶";
 
-        carButton.style.transform = "scale(1)";
+        setTimeout(() => {
 
-    },1000);
+            carButton.textContent = "🏁";
+            carButton.style.transform = "";
+
+        }, 700);
+
+    });
+
+}
+
+
+### PARALLAX LÉGER ###
+
+const heroSun = document.querySelector(".hero-sun");
+
+window.addEventListener("scroll", () => {
+
+    if (!heroSun) {
+        return;
+    }
+
+    const scroll = window.scrollY;
+
+    if (scroll < window.innerHeight) {
+
+        heroSun.style.transform =
+            `translateY(${scroll * 0.12}px)`;
+
+    }
 
 });
 
 
-// ### Effet photo ###
+### NAVIGATION ACTIVE ###
 
-document.querySelectorAll(".photo-card").forEach(card => {
+const sections = document.querySelectorAll(
+    "section[id]"
+);
 
-    card.addEventListener("mouseenter", () => {
+const navLinks = document.querySelectorAll(
+    ".navbar nav a"
+);
 
-        card.style.zIndex = "5";
+
+const sectionObserver = new IntersectionObserver(
+
+    entries => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                navLinks.forEach(link => {
+
+                    link.classList.remove("active");
+
+                });
+
+
+                const activeLink = document.querySelector(
+                    `.navbar nav a[href="#${entry.target.id}"]`
+                );
+
+
+                if (activeLink) {
+
+                    activeLink.classList.add("active");
+
+                }
+
+            }
+
+        });
+
+    },
+
+    {
+        threshold: 0.45
+    }
+
+);
+
+
+sections.forEach(section => {
+
+    sectionObserver.observe(section);
+
+});
+
+
+### PETITE INTERACTION POLAROIDS ###
+
+document.querySelectorAll(".polaroid").forEach(polaroid => {
+
+    polaroid.addEventListener("mousemove", event => {
+
+        const rect = polaroid.getBoundingClientRect();
+
+        const x =
+            (event.clientX - rect.left) / rect.width - 0.5;
+
+        const y =
+            (event.clientY - rect.top) / rect.height - 0.5;
+
+
+        polaroid.style.transform =
+            `perspective(700px)
+             rotateX(${y * -5}deg)
+             rotateY(${x * 5}deg)
+             scale(1.03)`;
 
     });
 
-    card.addEventListener("mouseleave", () => {
 
-        card.style.zIndex = "1";
+    polaroid.addEventListener("mouseleave", () => {
+
+        polaroid.style.transform = "";
 
     });
 
 });
 
 
-// ### Message console ###
+### FIN ###
 
 console.log(
-    "Bienvenue dans l'univers d'Anaïs. ♊"
+    "Bienvenue dans l'univers d'Anaïs ♡"
 );
